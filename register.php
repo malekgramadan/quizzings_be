@@ -7,4 +7,11 @@
         echo 'error' => 'All fields are required';
         exit;
     }
+    // Check existing user
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ? OR username = ?");
+    $stmt->execute([$input['email'], $input['username']]);
+    if ($stmt->fetch()) {
+        echo 'error' => 'Email or username already exists';
+        exit;
+    }
 ?>
