@@ -14,4 +14,8 @@
         echo 'error' => 'Email or username already exists';
         exit;
     }
+    $hashedPassword = password_hash($input['password'], PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
+    $stmt->execute([$input['username'], $input['email'], $hashedPassword]);
+    echo 'message' => 'User registered successfully';
 ?>
